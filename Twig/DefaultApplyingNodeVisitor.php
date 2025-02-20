@@ -27,6 +27,7 @@ use Twig\Node\Expression\Binary\EqualBinary;
 use Twig\Node\Expression\FilterExpression;
 use Twig\Node\Expression\Ternary\ConditionalTernary;
 use Twig\Node\Node;
+use Twig\Node\Nodes;
 use Twig\NodeVisitor\NodeVisitorInterface;
 
 /**
@@ -84,13 +85,13 @@ class DefaultApplyingNodeVisitor implements NodeVisitorInterface
                 // remove the replacements from the test node
                 $testNodeArguments    = iterator_to_array($testNode->getNode('arguments'));
                 $testNodeArguments[0] = new ArrayExpression([], $lineno);
-                $testNode->setNode('arguments', new Node($testNodeArguments));
+                $testNode->setNode('arguments', new Nodes($testNodeArguments));
 
                 // wrap the default node in a |replace filter
                 $defaultNode = new FilterExpression(
                     $arguments[0],
                     $env->getFilter('replace'),
-                    new Node([$wrappingNodeArguments[0]]),
+                    new Nodes([$wrappingNodeArguments[0]]),
                     $lineno
                 );
             }
