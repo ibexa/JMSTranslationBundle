@@ -24,8 +24,8 @@ use JMS\TranslationBundle\Exception\RuntimeException;
 use Twig\Environment;
 use Twig\Node\Expression\ArrayExpression;
 use Twig\Node\Expression\Binary\EqualBinary;
-use Twig\Node\Expression\ConditionalExpression;
 use Twig\Node\Expression\FilterExpression;
+use Twig\Node\Expression\Ternary\ConditionalTernary;
 use Twig\Node\Node;
 use Twig\NodeVisitor\NodeVisitorInterface;
 
@@ -95,7 +95,7 @@ class DefaultApplyingNodeVisitor implements NodeVisitorInterface
                 );
             }
 
-            $condition = new ConditionalExpression(
+            $condition = new ConditionalTernary(
                 new EqualBinary($testNode, $transNode->getNode('node'), $wrappingNode->getTemplateLine()),
                 $defaultNode,
                 clone $wrappingNode,
